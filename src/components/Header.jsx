@@ -76,91 +76,93 @@ export default function Header() {
 
   return (
     <AppBar color="inherit">
-        <Toolbar>
-          <Box
-            component="img"
-            sx={{
-              height: 64,
-            }}
-            alt="logo"
-            src={logo}
+      <Toolbar>
+        <Box
+          component="img"
+          sx={{
+            height: 64,
+          }}
+          alt="logo"
+          src={logo}
+        />
+
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
           />
+        </Search>
 
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
-
-          <Button
-            aria-owns={anchorEl ? "simple-menu" : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-            onMouseEnter={handleClick}
-            sx={{ marginLeft: "auto" }}
-          >
-            <ShoppingBasketIcon sx={{ width: 45, height: 45 }} />
-          </Button>
-          <Typography
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "absolute",
-              padding: 1.2,
-              width: 15,
-              height: 15,
-              right: 47,
-              top: 28,
-              borderRadius: 50,
-              background: "white",
-              fontSize: "13px",
-            }}
-          >
-            {products.length}
-          </Typography>
-        </Toolbar>
-
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          onMouseLeave={handleClose}
+        <Button
+          aria-owns={anchorEl ? "simple-menu" : undefined}
+          aria-haspopup="true"
+          onClick={handleClick}
+          onMouseEnter={handleClick}
+          sx={{ marginLeft: "auto" }}
         >
-          {products?.map((product) => (
-            <Box margin={2}>
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  boxShadow: 2,
+          <ShoppingBasketIcon sx={{ width: 45, height: 45 }} />
+        </Button>
+        <Typography
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "absolute",
+            padding: 1.2,
+            width: 15,
+            height: 15,
+            right: 47,
+            top: 28,
+            borderRadius: 50,
+            background: "white",
+            fontSize: "13px",
+          }}
+        >
+          {products.length}
+        </Typography>
+      </Toolbar>
 
-                  padding: 1,
-                }}
-              >
-                <Box component={"img"} src={product.image} width={35} />
-                <Typography width={"50%"}>{product.title}</Typography>
-                <Typography
-                  fontWeight={"bold"}
-                >{`${product.price} 000 sum`}</Typography>
+      <Menu
+        id="simple-menu"
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        onMouseLeave={handleClose}
+      >
+        {products?.map((product) => (
+          <Box margin={2}>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                boxShadow: 2,
 
-                <Button onClick={() => dispatch(removeFromBasket(product.id))}>
-                  <CancelIcon />
-                </Button>
-              </Box>
+                padding: 1,
+              }}
+            >
+              <Box component={"img"} src={product.image} width={35} />
+              <Typography width={"50%"}>{product.title}</Typography>
+              <Typography
+                fontWeight={"bold"}
+              >{`${product.price} 000 sum`}</Typography>
+
+              <Button onClick={() => dispatch(removeFromBasket(product.id))}>
+                <CancelIcon />
+              </Button>
             </Box>
-          ))}
+          </Box>
+        ))}
+        {total !== 0 && (
           <Typography sx={{ textAlign: "center", marginTop: 2 }}>
             Total: {`${total} 000 sum`}
           </Typography>
-        </Menu>
+        )}
+      </Menu>
     </AppBar>
   );
 }
